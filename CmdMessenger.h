@@ -10,7 +10,7 @@
 #define MAXCALLBACKS 50 
 #define DEFAULT_TIMEOUT 5000
 
-class CmdMessenger : public Messenger
+class CmdMessenger : public CmdMessengerBase
 {  
   messengerCallbackFunction callbackList[MAXCALLBACKS];
  // messengerReplyCallbackFunction replyCallback; 
@@ -33,6 +33,7 @@ public:
   CmdMessenger(Stream &comms, char separator);
   CmdMessenger(Stream &comms, char separator, char cmd_separator);
 
+  void attach(messengerCallbackFunction newFunction);
   void discard_LF_CR();
   void print_LF_CR();
 

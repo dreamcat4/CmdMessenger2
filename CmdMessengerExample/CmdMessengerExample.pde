@@ -138,7 +138,7 @@ void setup()
   
   // Attach default / generic callback methods
   cmdMessenger.attach(kARDUINO_READY, arduino_ready);
-  cmdMessenger.Messenger::attach(unknownCmd);
+  cmdMessenger.attach(unknownCmd);
 
   // Attach my application's user-defined callback methods
   attach_callbacks(messengerCallbacks);

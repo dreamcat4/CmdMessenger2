@@ -75,7 +75,7 @@ void setup()
   Serial.begin(115200);//9600);   // To Pc Terminal
   
   // Attach the CmdMessenger handler functions
-  cmdMessenger.Messenger::attach(unknownCmd);
+  cmdMessenger.attach(unknownCmd);
   cmdMessenger.attach(BUTPRESS_ARDUINO_CMD, buttPressCmd);
   cmdMessenger.attach(MESSAGE_ARDUINO_CMD, messageCmd);
   

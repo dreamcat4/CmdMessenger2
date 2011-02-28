@@ -25,6 +25,10 @@ CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator, char cmd_separa
   init(field_separator,cmd_separator);
 }
 
+void CmdMessenger::attach(messengerCallbackFunction newFunction) {
+	callback = newFunction;
+}
+
 void CmdMessenger::attach(byte msgId, messengerCallbackFunction newFunction) {
     if (msgId > 0 && msgId <= MAXCALLBACKS) // <= ? I think its ok ?
 	callbackList[msgId-1] = newFunction;

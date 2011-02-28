@@ -87,7 +87,7 @@ void setup()
   Serial.begin(115200);//9600); // begin serial
 
   // Attach the CmdMessenger handler functions
-  cmdMessenger.Messenger::attach(unknownCmd);
+  cmdMessenger.attach(unknownCmd);
   cmdMessenger.attach(DRAWELLIPSE_TOUCH_CMD, drawEllipseCmd);
   cmdMessenger.attach(MESSAGE_TOUCH_CMD, messageCmd);
 

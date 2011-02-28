@@ -4,20 +4,16 @@
 extern "C" {
   #include <stdlib.h>
 }
-#include "Messenger.h"
+#include "CmdMessengerBase.h"
 
-void Messenger::attach(messengerCallbackFunction newFunction) {
-	callback = newFunction;
-}
-
-void Messenger::reset() {
+void CmdMessengerBase::reset() {
         bufferIndex = 0;
         current = NULL;
         last = NULL;
         dumped = 1;
 }
 
-int Messenger::readInt() {
+int CmdMessengerBase::readInt() {
 
     if (next()) {
     	dumped = 1;
@@ -27,7 +23,7 @@ int Messenger::readInt() {
 
 }
 
-char Messenger::readChar() {
+char CmdMessengerBase::readChar() {
 
   if (next()) {
   	 dumped = 1;
@@ -37,7 +33,7 @@ char Messenger::readChar() {
 
 }
 
-void Messenger::copyString(char *string, uint8_t size) {
+void CmdMessengerBase::copyString(char *string, uint8_t size) {
 	
 	if (next()) {
 		dumped = 1;
@@ -47,7 +43,7 @@ void Messenger::copyString(char *string, uint8_t size) {
 	}
 }
 
-uint8_t Messenger::checkString(char *string) {
+uint8_t CmdMessengerBase::checkString(char *string) {
 	
 	if (next()) {
 		if ( strcmp(string,current) == 0 ) {
@@ -61,7 +57,7 @@ uint8_t Messenger::checkString(char *string) {
 
 
 
-uint8_t Messenger::next() {
+uint8_t CmdMessengerBase::next() {
 
   char * temppointer= NULL;
   switch (messageState) {
@@ -81,7 +77,7 @@ uint8_t Messenger::next() {
   return 0;
 }
 
-uint8_t Messenger::available() {
+uint8_t CmdMessengerBase::available() {
 	
   return next();
   

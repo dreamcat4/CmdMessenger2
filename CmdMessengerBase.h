@@ -11,7 +11,7 @@ extern "C" {
     typedef void (*messengerCallbackFunction)(void);
 }
 
-class Messenger
+class CmdMessengerBase
 {
 
 public:
@@ -20,8 +20,6 @@ public:
   void copyString(char *string, uint8_t size);
   uint8_t checkString(char *string);
   uint8_t available();
-  
-  void attach(messengerCallbackFunction newFunction);
   
 protected:
   // void init(char separator);
