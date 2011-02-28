@@ -100,7 +100,10 @@ uint8_t CmdMessenger::process(int serialByte) {
 
 void CmdMessenger::handleMessage()
 {
+    // If we didnt want to use ASCII integer...
+    // we would change the line below vv
 	int id = readInt();
+
 	//Serial << "ID+" << id << endl;
 	// Because readInt() can fail and return a 0 we can't
 	// start our array index at that number
