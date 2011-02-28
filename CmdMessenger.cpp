@@ -37,7 +37,7 @@ void CmdMessenger::handleMessage()
 	//Serial << "ID+" << id << endl;
 	// Because readInt() can fail and return a 0 we can't
 	// start our array index at that number
-	if (id > 0 && id < MAXCALLBACKS && callbackList[id-1] != NULL) 
+	if (id > 0 && id <= MAXCALLBACKS && callbackList[id-1] != NULL)
 	  (*callbackList[id-1])();
 	else // Cmd not registered default callback
 	  (*callback)();
