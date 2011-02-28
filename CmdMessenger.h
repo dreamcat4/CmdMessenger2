@@ -12,8 +12,8 @@
 
 class CmdMessenger : public CmdMessengerBase
 {  
+  messengerCallbackFunction default_callback;
   messengerCallbackFunction callbackList[MAXCALLBACKS];
- // messengerReplyCallbackFunction replyCallback; 
  
   // when we are sending a message and requre answer or acknowledgement
   // suspend any processing (process()) when serial intterupt is recieved
@@ -25,7 +25,7 @@ class CmdMessenger : public CmdMessengerBase
   boolean pauseProcessing;
     
   void handleMessage(); 
-  void init(char field_separator, char command_separator);
+  void init(Stream &comms, char field_separator, char command_separator);
   uint8_t process(int serialByte);
     
 public:

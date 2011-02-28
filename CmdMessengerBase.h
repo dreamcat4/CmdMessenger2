@@ -22,13 +22,10 @@ public:
   uint8_t available();
   
 protected:
-  // void init(char separator);
   uint8_t next();
   void reset();
   
   uint8_t messageState;
-  
-  messengerCallbackFunction callback;
   
   char* current; // Pointer to current data
   char* last;

@@ -13,6 +13,30 @@ void CmdMessengerBase::reset() {
         dumped = 1;
 }
 
+// Not sure if it will work for signed.. check it out
+/*unsigned char *CmdMessenger::writeRealInt(int val, unsigned char buff[2])
+{
+  buff[1] = (unsigned char)val;
+  buff[0] = (unsigned char)(val >> 8);  
+  buff[2] = 0;
+  return buff;
+}
+
+char* CmdMessenger::writeRealLong(long val, char buff[4])
+{
+  //buff[1] = (unsigned char)val;
+  //buff[0] = (unsigned char)(val >> 8);  
+  return buff;
+}
+
+char* CmdMessenger::writeRealFloat(float val, char buff[4])
+{
+  //buff[1] = (unsigned char)val;
+  //buff[0] = (unsigned char)(val >> 8);  
+  return buff;
+}
+*/
+
 int CmdMessengerBase::readInt() {
 
     if (next()) {

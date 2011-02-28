@@ -9,24 +9,21 @@ extern "C" {
 //////////////////// Cmd Messenger imp ////////////////
 CmdMessenger::CmdMessenger(Stream &ccomms)
 {
-  comms = &ccomms;
-  init(' ',';');
+  init(ccomms,' ',';');
 }
 
 CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator)
 {
-  comms = &ccomms;
-  init(field_separator,';');
+  init(ccomms,field_separator,';');
 }
 
 CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator, char cmd_separator)
 {
-  comms = &ccomms;
-  init(field_separator,cmd_separator);
+  init(ccomms,field_separator,cmd_separator);
 }
 
 void CmdMessenger::attach(messengerCallbackFunction newFunction) {
-	callback = newFunction;
+	default_callback = newFunction;
 }
 
 void CmdMessenger::attach(byte msgId, messengerCallbackFunction newFunction) {
@@ -44,22 +41,25 @@ void CmdMessenger::print_LF_CR()
   print_newlines   = true;
 }
 
-void CmdMessenger::init(char field_separator, char cmd_separator)
+void CmdMessenger::init(Stream &ccomms, char field_separator, char cmd_separator)
 {
+  comms = &ccomms;
+  
   discard_newlines = false;
   print_newlines   = false;
 
-  callback = NULL;
   token[0] = field_separator;
   token[1] = '\0';
   command_separator = cmd_separator;
 
-
   bufferLength = MESSENGERBUFFERSIZE;
-      bufferLastIndex = MESSENGERBUFFERSIZE -1;
-      reset();
+  bufferLastIndex = MESSENGERBUFFERSIZE -1;
+  reset();
+
+  default_callback = NULL;
   for (int i = 0; i < MAXCALLBACKS; i++)
     callbackList[i] = NULL;
+
   pauseProcessing = false;
 }
 
@@ -107,7 +107,7 @@ void CmdMessenger::handleMessage()
 	if (id > 0 && id <= MAXCALLBACKS && callbackList[id-1] != NULL)
 	  (*callbackList[id-1])();
 	else // Cmd not registered default callback
-	  (*callback)();
+	  (*default_callback)();
 }
 
 void CmdMessenger::feedinSerialData()
@@ -134,30 +134,6 @@ boolean CmdMessenger::blockedTillReply(int timeout)
   while(!comms->available() || (start - time) > timeout )
     time = millis();
 }
-
-// Not sure if it will work for signed.. check it out
-/*unsigned char *CmdMessenger::writeRealInt(int val, unsigned char buff[2])
-{
-  buff[1] = (unsigned char)val;
-  buff[0] = (unsigned char)(val >> 8);  
-  buff[2] = 0;
-  return buff;
-}
-
-char* CmdMessenger::writeRealLong(long val, char buff[4])
-{
-  //buff[1] = (unsigned char)val;
-  //buff[0] = (unsigned char)(val >> 8);  
-  return buff;
-}
-
-char* CmdMessenger::writeRealFloat(float val, char buff[4])
-{
-  //buff[1] = (unsigned char)val;
-  //buff[0] = (unsigned char)(val >> 8);  
-  return buff;
-}
-*/
 
 // if the arguments in the future could be passed in as int/long/float etc
 // then it might make sense to use the above writeReal????() methods
