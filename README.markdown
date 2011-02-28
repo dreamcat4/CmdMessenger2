@@ -1,24 +1,45 @@
-### CmdMessenger
+### CmdMessenger - Version 2.0
 
-For the Arduino Platform. By Neil Dudman.
+For the Arduino Platform.
 
 ### Intoduction
 
-I've added a few things in my own class CmdMessenger which extend from Messenger. Had to make a few small changes to the origional Messenger which I've included here along with my CmdMessenger class if its useful to anyone else.
+CmdMessenger is a command-orientated version of Messenger. To use CmdMessenger, we define a list of command identifiers. And attach callback / handler functions for recieved messages. The first sub-string (part) in a message is always the command identifier. If a message is received and there is no corresponding known command (and command handler function), then the message is passed to the default message handler.
 
-Basicly with CmdMessenger sub class you can attach more than 1 messenger handler, which get called according to the first string (cmd) in a message. If a valid message for the command hasn't been attached then the single default message handler of Messenger is called. 
+This new version of the library (version 2.0) contains many changes to both the CmdMessenger class and also the example program.
 
-[http://www.arduino.cc/playground/uploads/Code/CmdMessenger.zip](http://www.arduino.cc/playground/uploads/Code/CmdMessenger.zip)
+### Requirements
 
-The zip file contains the orgional Messenger with my small changes, the new CmdMessenger class and two sample programs (one runs on Arduino the other on a TouchShieldSlide) connected via hardware Serial1. If your using softwareSerial, which dosn't have the Serial.available() method then you will need to change the feedinSerialData() mehod.
+* Arduino IDE Version 022 or later.
+
+  Earlier versions eg 021 may work but are not tested.
+
+* Ardunio Streaming Library
+
+  [http://arduiniana.org/libraries/streaming/](http://arduiniana.org/libraries/streaming/)
+
+* Arduino Base64 Library
+
+  [https://github.com/adamvr/arduino-base64](https://github.com/adamvr/arduino-base64)
 
 
+### Getting Started
 
-Neil
+Open CmdMessengerExample.pde and upload it to your Arduino. Check the baud rate is OK for your model. Everything is explained as comments within the sktech file.
+
+Dreamcat4
 
 ### Links
 
 [http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1222259218/all](http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1222259218/all)
 
 [http://todbot.com/blog/2006/12/06/arduino-serial-c-code-to-talk-to-arduino](http://todbot.com/blog/2006/12/06/arduino-serial-c-code-to-talk-to-arduino)
+
+
+
+### Credit
+
+* Messenger Library     - By Thomas Ouellet Fredericks.
+* CmdMessenger Verion 1 - By Neil Dudman.
+* CmdMessenger Verion 2 - By Dreamcat4.
 
