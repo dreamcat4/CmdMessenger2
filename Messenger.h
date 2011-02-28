@@ -18,7 +18,6 @@ public:
   Messenger();
   Messenger(char separator);
   int readInt();
-  long readLong(); // Added based on a suggestion by G. Paolo Sani
   char readChar();
   void copyString(char *string, uint8_t size);
   uint8_t checkString(char *string);

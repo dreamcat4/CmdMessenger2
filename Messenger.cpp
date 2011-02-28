@@ -49,17 +49,6 @@ int Messenger::readInt() {
 
 }
 
-// Added based on a suggestion by G. Paolo Sanino
-long Messenger::readLong() {
-
-	if (next()) {
-		dumped = 1;
-		return atol(current); // atol for long instead of atoi for int variables
-	}
-	return 0;
-
-}
-
 char Messenger::readChar() {
 
   if (next()) {
