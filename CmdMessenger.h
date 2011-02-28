@@ -4,7 +4,7 @@
 #include <inttypes.h>
 #include "WProgram.h"
 
-#include "Messenger.h"
+#include "CmdMessengerBase.h"
 #include "Stream.h"
 
 #define MAXCALLBACKS 50 
