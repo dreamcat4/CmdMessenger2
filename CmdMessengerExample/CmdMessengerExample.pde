@@ -130,8 +130,8 @@ void attach_callbacks(messengerCallbackFunction* callbacks)
 void setup() 
 {
   // Listen on serial connection for messages from the pc
-  // Serial.begin(57600);  // Arduino Duemilanove
-  Serial.begin(115200); // Arduino Uno
+  Serial.begin(57600);  // Arduino Duemilanove, FTDI Serial
+  // Serial.begin(115200); // Arduino Uno, Mega, with AT8u2 USB
 
   // cmdMessenger.discard_LF_CR(); // If your PC tty sends newlines
   cmdMessenger.print_LF_CR();   // Use when debugging
