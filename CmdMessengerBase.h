@@ -23,7 +23,6 @@ public:
   
 protected:
   uint8_t next();
-  void reset();
   
   uint8_t messageState;
   

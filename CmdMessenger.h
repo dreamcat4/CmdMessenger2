@@ -27,7 +27,8 @@ class CmdMessenger : public CmdMessengerBase
   void handleMessage(); 
   void init(Stream &comms, char field_separator, char command_separator);
   uint8_t process(int serialByte);
-    
+  void reset();
+  
 public:
   CmdMessenger(Stream &comms);
   CmdMessenger(Stream &comms, char separator);

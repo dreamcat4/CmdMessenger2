@@ -63,6 +63,13 @@ void CmdMessenger::init(Stream &ccomms, char field_separator, char cmd_separator
   pauseProcessing = false;
 }
 
+void CmdMessenger::reset() {
+        bufferIndex = 0;
+        current = NULL;
+        last = NULL;
+        dumped = 1;
+}
+
 uint8_t CmdMessenger::process(int serialByte) {
     messageState = 0;
     if (serialByte > 0) {
