@@ -4,7 +4,7 @@ extern "C" {
   #include <stdlib.h>
 }
 #include "CmdMessenger.h"
-//#include "Streaming.h"
+#include <Streaming.h>
 
 //////////////////// Cmd Messenger imp ////////////////
 CmdMessenger::CmdMessenger(SerialBase &ccomms) : Messenger()

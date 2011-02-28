@@ -5,7 +5,7 @@
 #include "WProgram.h"
 
 #include "Messenger.h"
-#include "SerialBase.h"
+#include "Stream.h"
 
 #define MAXCALLBACKS 50 
 #define DEFAULT_TIMEOUT 5000
