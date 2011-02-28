@@ -56,6 +56,34 @@ void CmdMessenger::init()
   pauseProcessing = false;
 }
 
+uint8_t CmdMessenger::process(int serialByte) {
+    messageState = 0;
+    if (serialByte > 0) {
+
+      if((char)serialByte == command_separator)
+      {
+        buffer[bufferIndex]=0;
+        if(bufferIndex > 0)
+        {
+          messageState = 1;
+          current = buffer;
+        }
+        reset();
+      }
+      else
+      {
+        buffer[bufferIndex]=serialByte;
+        bufferIndex++;
+        if (bufferIndex >= bufferLastIndex) reset();
+      }
+    }
+
+    if ( messageState == 1 ) {
+    	handleMessage();
+    }
+    return messageState;
+}
+
 void CmdMessenger::handleMessage()
 {
 	int id = readInt();

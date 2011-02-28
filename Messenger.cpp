@@ -33,7 +33,6 @@ void Messenger::attach(messengerCallbackFunction newFunction) {
 
 void Messenger::reset() {
         bufferIndex = 0;
-        messageState = 0;
         current = NULL;
         last = NULL;
         dumped = 1;

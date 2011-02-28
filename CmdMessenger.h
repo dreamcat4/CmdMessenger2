@@ -27,6 +27,7 @@ class CmdMessenger : public Messenger
   void handleMessage(); 
   void init();  
   void init(char field_separator, char command_separator);
+  uint8_t process(int serialByte);
     
 public:
   CmdMessenger(Stream &comms);
