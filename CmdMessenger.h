@@ -12,6 +12,12 @@
 
 class CmdMessenger : public CmdMessengerBase
 {  
+
+protected:
+  uint8_t bufferIndex; // Index where to write the data
+  uint8_t bufferLength; // The length of the buffer (defaults to 64)
+  uint8_t bufferLastIndex; // The last index of the buffer
+
   messengerCallbackFunction default_callback;
   messengerCallbackFunction callbackList[MAXCALLBACKS];
  
@@ -37,6 +43,8 @@ public:
   void attach(messengerCallbackFunction newFunction);
   void discard_LF_CR();
   void print_LF_CR();
+
+  uint8_t available();
 
   // Polymorphism used to interact with serial class
   // Stream is an abstract base class which defines a base set

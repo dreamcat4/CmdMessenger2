@@ -7,6 +7,28 @@ extern "C"
 }
 #include "CmdMessengerBase.h"
 
+uint8_t CmdMessengerBase::next()
+{
+  char * temppointer= NULL;
+  switch (messageState)
+  {
+    case 0:
+    return 0;
+    case 1:
+    temppointer = buffer;
+    messageState = 2;
+    default:
+    if (dumped)
+      current = strtok_r(temppointer,token,&last);
+    if (current != NULL)
+    {
+      dumped = 0;
+      return 1; 
+    }
+  }
+  return 0;
+}
+
 // Not sure if it will work for signed.. check it out
 /*unsigned char *CmdMessengerBase::writeRealInt(int val, unsigned char buff[2])
 {
@@ -78,32 +100,5 @@ uint8_t CmdMessengerBase::checkString(char *string)
       return 0;
     }
   } 
-}
-
-uint8_t CmdMessengerBase::next()
-{
-  char * temppointer= NULL;
-  switch (messageState)
-  {
-    case 0:
-    return 0;
-    case 1:
-    temppointer = buffer;
-    messageState = 2;
-    default:
-    if (dumped)
-      current = strtok_r(temppointer,token,&last);
-    if (current != NULL)
-    {
-      dumped = 0;
-      return 1; 
-    }
-  }
-  return 0;
-}
-
-uint8_t CmdMessengerBase::available()
-{
-  return next();
 }
 

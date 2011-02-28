@@ -70,6 +70,11 @@ void CmdMessenger::reset() {
         dumped = 1;
 }
 
+uint8_t CmdMessenger::available()
+{
+  return next();
+}
+
 uint8_t CmdMessenger::process(int serialByte) {
     messageState = 0;
     if (serialByte > 0) {
