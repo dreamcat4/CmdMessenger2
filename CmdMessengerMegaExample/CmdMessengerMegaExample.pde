@@ -4,8 +4,16 @@
 #include <Streaming.h>
 #include <WString.h>
 
-// Common place where _CMD id's for both sides of Serial wire are defined
-#include "CmdMessengerCommands.h"
+// Cmds handled by the arduino
+// They will be called from TouchShield
+#define BUTPRESS_ARDUINO_CMD 1
+#define MESSAGE_ARDUINO_CMD 2
+
+
+// Cmds handled by the TouchShield
+// They will be called from Arduino
+#define DRAWELLIPSE_TOUCH_CMD 1
+#define MESSAGE_TOUCH_CMD 2
 
 #include <CmdMessenger.h>
 // Instantiate Messenger object with the message function and 

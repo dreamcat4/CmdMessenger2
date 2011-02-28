@@ -7,7 +7,16 @@
 
 // the CmdMessenger library and stuff
 #include <CmdMessenger.h>
-#include "CmdMessengerCommands.h"
+
+// Cmds handled by the arduino
+// They will be called from TouchShield
+#define BUTPRESS_ARDUINO_CMD 1
+#define MESSAGE_ARDUINO_CMD 2
+
+// Cmds handled by the TouchShield
+// They will be called from Arduino
+#define DRAWELLIPSE_TOUCH_CMD 1
+#define MESSAGE_TOUCH_CMD 2
 
 CmdMessenger cmdMessenger = CmdMessenger(Serial);
 
