@@ -28,13 +28,13 @@ class CmdMessenger : public Messenger
   void init();  
     
 public:
-  CmdMessenger(SerialBase &comms);
-  CmdMessenger(SerialBase &comms, char separator);    
-  
+  CmdMessenger(Stream &comms);
+  CmdMessenger(Stream &comms, char separator);
+
   // Polymorphism used to interact with serial class
-  // SerialBase is an abstract base class which defines a base set
-  // of functionality for serial classes.
-  SerialBase *comms;
+  // Stream is an abstract base class which defines a base set
+  // of functionality used by the serial classes.
+  Stream *comms;
   
   void attach(byte msgId, messengerCallbackFunction newFunction);
   

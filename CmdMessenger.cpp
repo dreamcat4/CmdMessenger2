@@ -7,13 +7,13 @@ extern "C" {
 #include <Streaming.h>
 
 //////////////////// Cmd Messenger imp ////////////////
-CmdMessenger::CmdMessenger(SerialBase &ccomms) : Messenger()
+CmdMessenger::CmdMessenger(Stream &ccomms)
 {
   comms = &ccomms;
   init();
 }
 
-CmdMessenger::CmdMessenger(SerialBase &ccomms, char separator) : Messenger(separator) 
+CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator)
 {
   comms = &ccomms;
   init();
