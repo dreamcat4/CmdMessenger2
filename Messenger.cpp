@@ -6,27 +6,6 @@ extern "C" {
 }
 #include "Messenger.h"
 
-Messenger::Messenger()
-{
-	init(' ');
-}
-
-Messenger::Messenger(char separator)
-{
-	if (separator == 10 || separator == 13 || separator == 0)  separator = 32;
-	init(separator);
-}
-
-void Messenger::init(char separator) 
-{
-	callback = NULL;
-	token[0] = separator; 
-	token[1] = 0;
-	bufferLength = MESSENGERBUFFERSIZE;
-    bufferLastIndex = MESSENGERBUFFERSIZE -1;
-    reset();
-}
-
 void Messenger::attach(messengerCallbackFunction newFunction) {
 	callback = newFunction;
 }
@@ -108,36 +87,3 @@ uint8_t Messenger::available() {
   
 }
 
-
-uint8_t Messenger::process(int serialByte) {
-     messageState = 0;
-    if (serialByte > 0) {
-
-      switch (serialByte) {
-      case 0: 
-      	break;
-      case 10: // LF
-        break;
-      case 13: // CR
-        buffer[bufferIndex]=0;
-        reset();
-        messageState = 1;
-        current = buffer;
-        break;
-      default:
-          buffer[bufferIndex]=serialByte;
-          bufferIndex++;
-           if (bufferIndex >= bufferLastIndex) reset();
-         }
-      }
-      
-      if ( messageState == 1 ) {
-	handleMessage();
-      }
-      return messageState;
-}
-
-void Messenger::handleMessage()
-{
-  if ( callback != NULL) (*callback)();
-}

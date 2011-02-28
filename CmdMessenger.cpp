@@ -59,13 +59,6 @@ void CmdMessenger::init(char field_separator, char cmd_separator)
   pauseProcessing = false;
 }
 
-void CmdMessenger::init()
-{	
-  for (int i = 0; i < MAXCALLBACKS; i++)
-    callbackList[i] = NULL;
-  pauseProcessing = false;
-}
-
 uint8_t CmdMessenger::process(int serialByte) {
     messageState = 0;
     if (serialByte > 0) {

@@ -25,7 +25,6 @@ class CmdMessenger : public Messenger
   boolean pauseProcessing;
     
   void handleMessage(); 
-  void init();  
   void init(char field_separator, char command_separator);
   uint8_t process(int serialByte);
     

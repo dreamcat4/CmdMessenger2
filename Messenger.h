@@ -15,23 +15,16 @@ class Messenger
 {
 
 public:
-  Messenger();
-  Messenger(char separator);
   int readInt();
   char readChar();
   void copyString(char *string, uint8_t size);
   uint8_t checkString(char *string);
-  uint8_t process(int serialByte);
   uint8_t available();
   
   void attach(messengerCallbackFunction newFunction);
   
-  // A method that can be overridden to modifuy the behaviour of
-  // handleing messages as they are recieved
-  virtual void handleMessage(); 
-  
 protected:
-  void init(char separator);
+  // void init(char separator);
   uint8_t next();
   void reset();
   
