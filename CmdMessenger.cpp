@@ -30,6 +30,16 @@ void CmdMessenger::attach(byte msgId, messengerCallbackFunction newFunction) {
 	callbackList[msgId-1] = newFunction;
 }
 
+void CmdMessenger::discard_LF_CR()
+{
+  discard_newlines = true;
+}
+
+void CmdMessenger::print_LF_CR()
+{
+  print_newlines   = true;
+}
+
 void CmdMessenger::init(char field_separator, char cmd_separator)
 {
   discard_newlines = false;
@@ -75,6 +85,10 @@ uint8_t CmdMessenger::process(int serialByte) {
         buffer[bufferIndex]=serialByte;
         bufferIndex++;
         if (bufferIndex >= bufferLastIndex) reset();
+
+        if(discard_newlines)
+          if(((char)serialByte == '\n') || ((char)serialByte == '\r'))
+            reset();
       }
     }
 
@@ -158,7 +172,8 @@ char* CmdMessenger::sendCmd(int cmdId, char *msg, boolean reqAc,
   comms->print(cmdId); 
   comms->print(token[0]); 
   comms->print(msg); 
-  comms->println();
+  if(print_newlines)
+    comms->println();
   if (reqAc) {    
     do {
       blockedTillReply(timeout);

@@ -34,6 +34,9 @@ public:
   CmdMessenger(Stream &comms, char separator);
   CmdMessenger(Stream &comms, char separator, char cmd_separator);
 
+  void discard_LF_CR();
+  void print_LF_CR();
+
   // Polymorphism used to interact with serial class
   // Stream is an abstract base class which defines a base set
   // of functionality used by the serial classes.
@@ -51,6 +54,9 @@ public:
   void feedinSerialData();
   
   char command_separator;
+
+  boolean discard_newlines;
+  boolean print_newlines;
 
   int8_t _read_blocked(void);
   boolean blockedTillReply(int timeout = DEFAULT_TIMEOUT);
