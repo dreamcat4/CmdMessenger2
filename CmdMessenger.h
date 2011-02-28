@@ -58,7 +58,6 @@ public:
   boolean discard_newlines;
   boolean print_newlines;
 
-  int8_t _read_blocked(void);
   boolean blockedTillReply(int timeout = DEFAULT_TIMEOUT);
 };
 #endif

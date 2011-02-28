@@ -116,17 +116,6 @@ void CmdMessenger::feedinSerialData()
     process(comms->read( ) );
 }
 
-// Taken from RougueMP3 library
-int8_t CmdMessenger::_read_blocked(void)
-{
-  // int8_t r;
-  
-  while(!comms->available());
-  // while((r = this->_readf()) < 0);   // this would be faster if we could guarantee that the _readf() function
-                                        // would return -1 if there was no byte read
-  return comms->read();
-}
-
 boolean CmdMessenger::blockedTillReply(int timeout)
 {
   unsigned long start = millis();
