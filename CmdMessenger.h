@@ -26,10 +26,12 @@ class CmdMessenger : public Messenger
     
   void handleMessage(); 
   void init();  
+  void init(char field_separator, char command_separator);
     
 public:
   CmdMessenger(Stream &comms);
   CmdMessenger(Stream &comms, char separator);
+  CmdMessenger(Stream &comms, char separator, char cmd_separator);
 
   // Polymorphism used to interact with serial class
   // Stream is an abstract base class which defines a base set
@@ -47,6 +49,8 @@ public:
   // passed in through constructor is the same as used in main loop
   void feedinSerialData();
   
+  char command_separator;
+
   int8_t _read_blocked(void);
   boolean blockedTillReply(int timeout = DEFAULT_TIMEOUT);
 };

@@ -10,18 +10,43 @@ extern "C" {
 CmdMessenger::CmdMessenger(Stream &ccomms)
 {
   comms = &ccomms;
-  init();
+  init(' ',';');
 }
 
 CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator)
 {
   comms = &ccomms;
-  init();
+  init(field_separator,';');
+}
+
+CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator, char cmd_separator)
+{
+  comms = &ccomms;
+  init(field_separator,cmd_separator);
 }
 
 void CmdMessenger::attach(byte msgId, messengerCallbackFunction newFunction) {
     if (msgId > 0 && msgId <= MAXCALLBACKS) // <= ? I think its ok ?
 	callbackList[msgId-1] = newFunction;
+}
+
+void CmdMessenger::init(char field_separator, char cmd_separator)
+{
+  discard_newlines = false;
+  print_newlines   = false;
+
+  callback = NULL;
+  token[0] = field_separator;
+  token[1] = '\0';
+  command_separator = cmd_separator;
+
+
+  bufferLength = MESSENGERBUFFERSIZE;
+      bufferLastIndex = MESSENGERBUFFERSIZE -1;
+      reset();
+  for (int i = 0; i < MAXCALLBACKS; i++)
+    callbackList[i] = NULL;
+  pauseProcessing = false;
 }
 
 void CmdMessenger::init()
