@@ -8,20 +8,24 @@ CmdMessenger is a command-orientated version of Messenger. To use CmdMessenger, 
 
 This new version of the library (version 2.0) contains many changes to both the CmdMessenger class and also the example program.
 
+### Improvements Over CmdMessenger v1 (v0.1.0)
+
+* Updated to work with Arduino IDE 022
+* Enable / disable newline (print and ignore)
+* New generic example (works with all Arduinos)
+* More reliable process() loop.
+* User can set their own cmd and field seperator
+ (defaults to ';' and ',')
+* Base-64 encoded data to avoid collisions with ^^
+* Works with Arduino Serial Monitor for easy debugging
+
 ### Requirements
 
-* Arduino IDE Version 022 or later.
+* [Arduino IDE Version 022 or later](http://www.arduino.cc/en/Main/Software)* 
+* [Ardunio Streaming Library](http://arduiniana.org/libraries/streaming/)
+* [Arduino Base64 Library](https://github.com/adamvr/arduino-base64)
 
-  Earlier versions eg 021 may work but are not tested.
-
-* Ardunio Streaming Library
-
-  [http://arduiniana.org/libraries/streaming/](http://arduiniana.org/libraries/streaming/)
-
-* Arduino Base64 Library
-
-  [https://github.com/adamvr/arduino-base64](https://github.com/adamvr/arduino-base64)
-
+\* Earlier versions of Arduino IDE might work but wernt tested.
 
 ### Getting Started
 
@@ -39,7 +43,7 @@ Dreamcat4
 
 ### Credit
 
-* Messenger Library     - By Thomas Ouellet Fredericks.
-* CmdMessenger Verion 1 - By Neil Dudman.
-* CmdMessenger Verion 2 - By Dreamcat4.
+* Initial Messenger Library - By Thomas Ouellet Fredericks.
+* CmdMessenger Version 1 - By Neil Dudman.
+* CmdMessenger Version 2 - By Dreamcat4.
 
