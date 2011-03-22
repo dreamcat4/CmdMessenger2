@@ -31,6 +31,8 @@ This new version of the library (version 2.0) contains many changes to both the 
 
 Open CmdMessengerExample.pde and upload it to your Arduino. Check the baud rate is OK for your model. Everything is explained as comments within the sktech file.
 
+Note: Theres currently no Max/MSP examples here. However we do expect to provide some additional Max/MSP help in the near future. Until then its recommended to just try out the example .pde file by using the Arduino Serial Monitor.
+
 Dreamcat4
 
 ### Links
