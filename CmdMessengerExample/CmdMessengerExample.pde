@@ -1,38 +1,82 @@
 // This example demonstrates CmdMessenger's callback  & attach methods
 // For Arduino Uno and Arduino Duemilanove board (may work with other)
 
-#include <Streaming.h> // Nicer printing to Serial
+// Download these into your Sketches/libraries/ folder...
+
+// CmdMessenger library available from https://github.com/dreamcat4/cmdmessenger
 #include <CmdMessenger.h>
 
 // Base64 library available from https://github.com/adamvr/arduino-base64
-// Download it into your Sketches/libraries/ folder
 #include <Base64.h>
 
-// Must not conflict with or other raw message data. Fine if we use base64 library
+// Streaming4 library available from http://arduiniana.org/libraries/streaming/
+#include <Streaming.h>
+
+// Mustnt conflict / collide with our message payload data. Fine if we use base64 library ^^ above
 char field_separator = ',';
 char command_separator = ';';
 
-// Instantiate Messenger object with Serial
+// Attach a new CmdMessenger object to the default Serial port
 CmdMessenger cmdMessenger = CmdMessenger(Serial, field_separator, command_separator);
+
+
+// ------------------ S E R I A L  M O N I T O R -----------------------------
+// 
+// Try typing these command messages in the serial monitor!
+// 
+// 4,hi,heh,ho!;
+// 5;
+// 5,dGhlIGJlYXJzIGFyZSBhbGxyaWdodA==;
+// 5,dGhvc2UgbmFzdHkgY29udHJvbCA7OyBjaGFyYWN0ZXJzICws==;
+// 2;
+// 6;
+// 
+// 
+// Expected output:
+// 
+// 1,Arduino ready
+// 1,bens cmd recieved
+// 1,hi
+// 1,heh
+// 1,ho!
+// 1,jerrys cmd recieved
+// 1,"the bears are allright" encoded in base64...
+// 1,dGhlIGJlYXJzIGFyZSBhbGxyaWdodA==
+// 1,jerrys cmd recieved
+// 1,what you send me, decoded base64...
+// 1,the bears are allright
+// 1,jerrys cmd recieved
+// 1,what you send me, decoded base64...
+// 1,those nasty control ;; characters ,,
+// 1,Arduino ready
+// 3,Unknown command
+// 
 
 
 // ------------------ C M D  L I S T I N G ( T X / R X ) ---------------------
 
+// We can define up to a default of 50 cmds total, including both directions (send + recieve)
+// and including also the first 4 default command codes for the generic error handling.
+// If you run out of message slots, then just increase the value of MAXCALLBACKS in CmdMessenger.h
+
 // Commands we send from the Arduino to be received on the PC
 enum
 {
-  kCOMM_ERROR    = 000, // Reserved for CmdMessenger
-  kACK           = 001, // Acknowledge cmd received
-  kARDUINO_READY = 002, // For PC to ping our arduino
-  kERR           = 003, // Report bad cmd, cmd error
-  // We can define more commands here, eg
+  kCOMM_ERROR    = 000, // Lets Arduino report serial port comm error back to the PC (only works for some comm errors)
+  kACK           = 001, // Arduino acknowledges cmd was received
+  kARDUINO_READY = 002, // After opening the comm port, send this cmd 02 from PC to check arduino is ready
+  kERR           = 003, // Arduino reports badly formatted cmd, or cmd not recognised
+
+  // Now we can define many more 'send' commands, coming from the arduino -> the PC, eg
   // kICE_CREAM_READY,
   // kICE_CREAM_PRICE,
-  // And it will increase our start offset for vv the other cmds below
+  // For the above commands, we just call cmdMessenger.sendCmd() anywhere we want in our Arduino program.
+
   kSEND_CMDS_END, // Mustnt delete this line
 };
 
-// Commands we send from the PC and recieve in callbacks on the Arduino
+// Commands we send from the PC and want to recieve on the Arduino.
+// We must define a callback function in our Arduino program for each entry in the list below vv.
 // They start at the address kSEND_CMDS_END defined ^^ above as 004
 messengerCallbackFunction messengerCallbacks[] = 
 {
@@ -40,6 +84,10 @@ messengerCallbackFunction messengerCallbacks[] =
   jerrys_base64_data,  // 005
   NULL
 };
+// Its also possible (above ^^) to implement some symetric commands, when both the Arduino and
+// PC / host are using each other's same command numbers. However we recommend only to do this if you
+// really have the exact same messages going in both directions. Then specify the integers (with '=')
+
 
 // ------------------ C A L L B A C K  M E T H O D S -------------------------
 
@@ -130,11 +178,11 @@ void attach_callbacks(messengerCallbackFunction* callbacks)
 void setup() 
 {
   // Listen on serial connection for messages from the pc
-  Serial.begin(57600);  // Arduino Duemilanove, FTDI Serial
-  // Serial.begin(115200); // Arduino Uno, Mega, with AT8u2 USB
+  // Serial.begin(57600);  // Arduino Duemilanove, FTDI Serial
+  Serial.begin(115200); // Arduino Uno, Mega, with AT8u2 USB
 
-  // cmdMessenger.discard_LF_CR(); // If your PC tty sends newlines
-  cmdMessenger.print_LF_CR();   // Use when debugging
+  // cmdMessenger.discard_LF_CR(); // Useful if your terminal appends CR/LF, and you wish to remove them
+  cmdMessenger.print_LF_CR();   // Make output more readable whilst debugging in Arduino Serial Monitor
   
   // Attach default / generic callback methods
   cmdMessenger.attach(kARDUINO_READY, arduino_ready);
@@ -144,6 +192,9 @@ void setup()
   attach_callbacks(messengerCallbacks);
 
   arduino_ready();
+
+  // blink
+  pinMode(13, OUTPUT);
 }
 
 
@@ -156,8 +207,11 @@ int counter = 0;
 
 void timeout()
 {
-  if (/* condition */ true)
-    ; // Handle event
+  // blink
+  if (counter % 2)
+    digitalWrite(13, HIGH);
+  else
+    digitalWrite(13, LOW);
   counter ++;
 }  
 
@@ -175,37 +229,4 @@ void loop()
 
   // Loop.
 }
-
-// ------------------ S E R I A L  M O N I T O R -----------------------------
-// 
-// Try typing these command messages in the serial monitor!
-// 
-// 4,hi,heh,ho!;
-// 5;
-// 5,dGhlIGJlYXJzIGFyZSBhbGxyaWdodA==;
-// 5,dGhvc2UgbmFzdHkgY29udHJvbCA7OyBjaGFyYWN0ZXJzICws==;
-// 2;
-// 6;
-// 
-// 
-// Expected output:
-// 
-// 1,Arduino ready
-// 1,bens cmd recieved
-// 1,hi
-// 1,heh
-// 1,ho!
-// 1,jerrys cmd recieved
-// 1,"the bears are allright" encoded in base64...
-// 1,dGhlIGJlYXJzIGFyZSBhbGxyaWdodA==
-// 1,jerrys cmd recieved
-// 1,what you send me, decoded base64...
-// 1,the bears are allright
-// 1,jerrys cmd recieved
-// 1,what you send me, decoded base64...
-// 1,those nasty control ;; characters ,,
-// 1,Arduino ready
-// 3,Unknown command
-// 
-
 
