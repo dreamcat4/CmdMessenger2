@@ -14,13 +14,14 @@ class CmdMessenger : public CmdMessengerBase
 {  
 
 protected:
-  uint8_t bufferIndex; // Index where to write the data
-  uint8_t bufferLength; // The length of the buffer (defaults to 64)
+  uint8_t bufferIndex;     // Index where to write the data
+  uint8_t bufferLength;    // The maximum length of the buffer (defaults to 64)
   uint8_t bufferLastIndex; // The last index of the buffer
 
   messengerCallbackFunction default_callback;
   messengerCallbackFunction callbackList[MAXCALLBACKS];
- 
+
+  // (not implemented, generally not needed)
   // when we are sending a message and requre answer or acknowledgement
   // suspend any processing (process()) when serial intterupt is recieved
   // Even though we usually only have single processing thread we still need
@@ -56,10 +57,7 @@ public:
   char* sendCmd(int cmdId, char *msg, boolean reqAc = false, 
 		    char *replyBuff = NULL, int butSize = 0, int timeout = DEFAULT_TIMEOUT, 
 		    int retryCount = 10);
-  // To be put in main loop instead of the 
-  //while ( Serial.available( ) ) cmdMessage.process(Serial.read( ) );
-  // Although you can do iether, this just makes sure that the SerialBase
-  // passed in through constructor is the same as used in main loop
+
   void feedinSerialData();
   
   char command_separator;
