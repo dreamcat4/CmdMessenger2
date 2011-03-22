@@ -12,14 +12,14 @@ CmdMessenger::CmdMessenger(Stream &ccomms)
   init(ccomms,' ',';');
 }
 
-CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator)
+CmdMessenger::CmdMessenger(Stream &ccomms, char fld_separator)
 {
-  init(ccomms,field_separator,';');
+  init(ccomms,fld_separator,';');
 }
 
-CmdMessenger::CmdMessenger(Stream &ccomms, char field_separator, char cmd_separator)
+CmdMessenger::CmdMessenger(Stream &ccomms, char fld_separator, char cmd_separator)
 {
-  init(ccomms,field_separator,cmd_separator);
+  init(ccomms,fld_separator,cmd_separator);
 }
 
 void CmdMessenger::attach(messengerCallbackFunction newFunction) {
@@ -41,7 +41,7 @@ void CmdMessenger::print_LF_CR()
   print_newlines   = true;
 }
 
-void CmdMessenger::init(Stream &ccomms, char field_separator, char cmd_separator)
+void CmdMessenger::init(Stream &ccomms, char fld_separator, char cmd_separator)
 {
   comms = &ccomms;
   
@@ -50,6 +50,7 @@ void CmdMessenger::init(Stream &ccomms, char field_separator, char cmd_separator
 
   token[0] = field_separator;
   token[1] = '\0';
+  field_separator   = fld_separator;
   command_separator = cmd_separator;
 
   bufferLength = MESSENGERBUFFERSIZE;
@@ -77,9 +78,11 @@ uint8_t CmdMessenger::available()
 
 uint8_t CmdMessenger::process(int serialByte) {
     messageState = 0;
+    char serialChar = (char)serialByte;
+
     if (serialByte > 0) {
 
-      if((char)serialByte == command_separator)
+      if(serialChar == command_separator)
       {
         buffer[bufferIndex]=0;
         if(bufferIndex > 0)
@@ -95,8 +98,8 @@ uint8_t CmdMessenger::process(int serialByte) {
         bufferIndex++;
         if (bufferIndex >= bufferLastIndex) reset();
 
-        if(discard_newlines)
-          if(((char)serialByte == '\n') || ((char)serialByte == '\r'))
+        if(discard_newlines && (serialChar != field_separator))
+          if((serialChar == '\n') || (serialChar == '\r'))
             reset();
       }
     }
@@ -150,7 +153,7 @@ char* CmdMessenger::sendCmd(int cmdId, char *msg, boolean reqAc,
   comms->print(token[0]); 
   comms->print(msg); 
   if(print_newlines)
-    comms->println();
+    comms->println(); // should append BOTH \r\n
   if (reqAc) {    
     do {
       blockedTillReply(timeout);

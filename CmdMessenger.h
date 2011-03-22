@@ -37,8 +37,8 @@ protected:
   
 public:
   CmdMessenger(Stream &comms);
-  CmdMessenger(Stream &comms, char separator);
-  CmdMessenger(Stream &comms, char separator, char cmd_separator);
+  CmdMessenger(Stream &comms, char fld_separator);
+  CmdMessenger(Stream &comms, char fld_separator, char cmd_separator);
 
   void attach(messengerCallbackFunction newFunction);
   void discard_LF_CR();
@@ -63,6 +63,7 @@ public:
   void feedinSerialData();
   
   char command_separator;
+  char field_separator;
 
   boolean discard_newlines;
   boolean print_newlines;
