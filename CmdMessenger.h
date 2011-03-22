@@ -4,18 +4,23 @@
 #include <inttypes.h>
 #include "WProgram.h"
 
-#include "CmdMessengerBase.h"
 #include "Stream.h"
 
-#define MAXCALLBACKS 50 
-#define DEFAULT_TIMEOUT 5000
+extern "C" {
+  // Our callbacks are always method signature: void cmd(void);
+  typedef void (*messengerCallbackFunction)(void);
+}
 
-class CmdMessenger : public CmdMessengerBase
+#define MAXCALLBACKS 50        // The maximum number of unique commands
+#define MESSENGERBUFFERSIZE 64 // The maximum length of the buffer (defaults to 64)
+#define DEFAULT_TIMEOUT 5000   // Abandon incomplete messages if nothing heard after 5 seconds
+
+class CmdMessenger
 {  
 
 protected:
   uint8_t bufferIndex;     // Index where to write the data
-  uint8_t bufferLength;    // The maximum length of the buffer (defaults to 64)
+  uint8_t bufferLength;    // Is set to MESSENGERBUFFERSIZE
   uint8_t bufferLastIndex; // The last index of the buffer
 
   messengerCallbackFunction default_callback;
@@ -35,7 +40,13 @@ protected:
   void init(Stream &comms, char field_separator, char command_separator);
   uint8_t process(int serialByte);
   void reset();
-  
+
+  char buffer[MESSENGERBUFFERSIZE]; // Buffer that holds the data
+  uint8_t messageState;
+  uint8_t dumped;
+  char* current; // Pointer to current data
+  char* last;
+
 public:
   CmdMessenger(Stream &comms);
   CmdMessenger(Stream &comms, char fld_separator);
@@ -45,7 +56,13 @@ public:
   void discard_LF_CR();
   void print_LF_CR();
 
+  uint8_t next();
   uint8_t available();
+
+  int readInt();
+  char readChar();
+  void copyString(char *string, uint8_t size);
+  uint8_t checkString(char *string);
 
   // Polymorphism used to interact with serial class
   // Stream is an abstract base class which defines a base set
