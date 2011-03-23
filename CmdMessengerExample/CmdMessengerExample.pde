@@ -34,22 +34,22 @@ CmdMessenger cmdMessenger = CmdMessenger(Serial, field_separator, command_separa
 // 
 // Expected output:
 // 
-// 1,Arduino ready
-// 1,bens cmd recieved
-// 1,hi
-// 1,heh
-// 1,ho!
-// 1,jerrys cmd recieved
-// 1,"the bears are allright" encoded in base64...
-// 1,dGhlIGJlYXJzIGFyZSBhbGxyaWdodA==
-// 1,jerrys cmd recieved
-// 1,what you send me, decoded base64...
-// 1,the bears are allright
-// 1,jerrys cmd recieved
-// 1,what you send me, decoded base64...
-// 1,those nasty control ;; characters ,,
-// 1,Arduino ready
-// 3,Unknown command
+// 1,Arduino ready;
+// 1,bens cmd recieved;
+// 1,hi;
+// 1,heh;
+// 1,ho!;
+// 1,jerrys cmd recieved;
+// 1,"the bears are allright" encoded in base64...;
+// 1,dGhlIGJlYXJzIGFyZSBhbGxyaWdodA==;
+// 1,jerrys cmd recieved;
+// 1,what you send me, decoded base64...;
+// 1,the bears are allright;
+// 1,jerrys cmd recieved;
+// 1,what you send me, decoded base64...;
+// 1,those nasty control ;; characters ,,;
+// 1,Arduino ready;
+// 3,Unknown command;
 // 
 
 

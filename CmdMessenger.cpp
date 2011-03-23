@@ -173,9 +173,10 @@ char* CmdMessenger::sendCmd(int cmdId, char *msg, boolean reqAc,
   int tryCount = 0;  
   pauseProcessing = true;
   //*comms << cmdId << field_separator << msg << endl;
-  comms->print(cmdId); 
-  comms->print(field_separator); 
-  comms->print(msg); 
+  comms->print(cmdId);
+  comms->print(field_separator);
+  comms->print(msg);
+  comms->print(command_separator);
   if(print_newlines)
     comms->println(); // should append BOTH \r\n
   if (reqAc) {    
