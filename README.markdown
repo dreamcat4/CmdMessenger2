@@ -1,10 +1,10 @@
-### CmdMessenger - Version 2.0
+### CmdMessenger v2
 
-For the Arduino Platform.
+A Serial Messaging system for the Arduino Platform.
 
 ### Intoduction
 
-CmdMessenger is a command-orientated version of Messenger. To use CmdMessenger, we define a list of command identifiers. And attach callback / handler functions for recieved messages. The first sub-string (part) in a message is always the command identifier. If a message is received and there is no corresponding known command (and command handler function), then the message is passed to the default message handler.
+CmdMessenger is a command-orientated version of Messenger for serial comms. To use CmdMessenger, we define a list of command identifiers. And attach callback / handler functions for recieved messages. The first sub-string (part) in a message is always the command identifier. If a message is received and there is no corresponding known command (and command handler function), then the message is passed to the default message handler.
 
 This new version of the library (version 2.0) contains many changes to both the CmdMessenger class and also the example program.
 
@@ -29,18 +29,17 @@ This new version of the library (version 2.0) contains many changes to both the 
 
 ### Getting Started
 
-Open CmdMessengerExample.pde and upload it to your Arduino. Check the baud rate is OK for your model. Everything is explained as comments within the sktech file.
+Pretty much everything is explained within the example sketch file. Open CmdMessengerExample.pde in Arduino IDE and upload it to your microcontroller device. Check the baud rate is OK for your model. Try it out by typing commands into the Arduino Serial Monitor.
 
-Note: Theres currently no Max/MSP examples here. However we do expect to provide some additional Max/MSP help in the near future. Until then its recommended to just try out the example .pde file by using the Arduino Serial Monitor.
+Once its been established what is happening on the Arduino side by following the interactive example, the next step is to work on with the program running on the other side of the serial interface which will be communicating with the Arduino. There are a wide variety of platforms and programming languages which can be used. C, Python, Ruby, Linux, Windows, and other embedded devices. The possibilities are endless. A principal benefit of CmdMessenger is that the format of messages are both flexible and simple enough to be programmed in nearly any suitable language or programming environment that supports a serial (comm port) interface.
+
+The following C program `arduino-serial` is recommended for this task. It can be modified to suit your needs, or compiled "as-is" to provide an appropriate command line tool for scripting.
+
+* [arduino-serial.c](http://todbot.com/blog/2006/12/06/arduino-serial-c-code-to-talk-to-arduino)
+
+We provide a Max5 / MaxMSP example (`/Max5` folder) because historically that has been included with previous distributions of Messenger. The inclusion of a MaxMSP sample is not any kind of recommendation over other languages however.
 
 Dreamcat4
-
-### Links
-
-[http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1222259218/all](http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1222259218/all)
-
-[http://todbot.com/blog/2006/12/06/arduino-serial-c-code-to-talk-to-arduino](http://todbot.com/blog/2006/12/06/arduino-serial-c-code-to-talk-to-arduino)
-
 
 
 ### Credit
