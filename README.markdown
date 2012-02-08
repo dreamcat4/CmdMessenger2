@@ -37,6 +37,8 @@ The following C program `arduino-serial` is recommended for this task. It can be
 
 * [arduino-serial.c](http://todbot.com/blog/2006/12/06/arduino-serial-c-code-to-talk-to-arduino)
 
+NOTE: Don't put `arduino-serial.c` into your `Arduino/libraries/CmdMessenger/` directory or CmdMessenger won't compile anymore.
+
 We provide a Max5 / MaxMSP example (`/Max5` folder) because historically that has been included with previous distributions of Messenger. The inclusion of a MaxMSP sample is not any kind of recommendation over other languages however.
 
 Dreamcat4
