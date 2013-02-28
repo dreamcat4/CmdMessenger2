@@ -50,3 +50,7 @@ Dreamcat4
 * CmdMessenger Version 1 - By Neil Dudman.
 * CmdMessenger Version 2 - By Dreamcat4.
 
+### Copyright
+
+CmdMessenger is Copyright (c) 2013 under MIT License. See {file:LICENSE} for details.
+
