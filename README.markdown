@@ -52,5 +52,5 @@ Dreamcat4
 
 ### Copyright
 
-CmdMessenger is Copyright (c) 2013 under MIT License. See {file:LICENSE} for details.
+CmdMessenger is provided Copyright © 2013 under MIT License.
 
